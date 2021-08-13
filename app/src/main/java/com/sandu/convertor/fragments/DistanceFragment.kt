@@ -1,33 +1,31 @@
 package com.sandu.convertor.fragments
 
 import android.os.Bundle
+import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
 import com.sandu.convertor.R
+import com.sandu.convertor.data.DistanceConverters
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DistanceFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DistanceFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    val distance = DistanceConverters()
+    var firstValue:String = ""
+    var secondValue:String = ""
 
+    val units: ArrayList<CharSequence> = arrayListOf<CharSequence>(
+        this.toString(),
+        R.array.unit_name.toString(), android.R.layout.simple_spinner_item.toString()
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+
+
+
     }
 
     override fun onCreateView(
@@ -35,26 +33,93 @@ class DistanceFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_distance, container, false)
+
+
+            return inflater.inflate(R.layout.fragment_distance, container, false)
+        }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val spinner: Spinner = view.findViewById(R.id.spinner)
+        val spinner2: Spinner = view.findViewById(R.id.spinner2)
+        val convert_btn:Button = view.findViewById(R.id.convert_btn)
+        val from_tv:EditText = view.findViewById(R.id.from_tv)
+        val to_tv:EditText = view.findViewById(R.id.to_tv)
+        val ctx = this.context
+
+
+
+        spinner.adapter = activity?.let {
+            ArrayAdapter(
+                it, R.layout.spinner_item,
+                resources.getStringArray(R.array.unit_name)
+            )
+        } as SpinnerAdapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val choice = parent?.getItemAtPosition(position).toString()
+                firstValue(choice)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+        spinner2.adapter = activity?.let {
+            ArrayAdapter(
+                it, R.layout.spinner_item2,
+                resources.getStringArray(R.array.unit_name)
+            )
+        } as SpinnerAdapter
+
+        spinner2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                val choice2 = parent?.getItemAtPosition(position).toString()
+                secondValue(choice2)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+        }
+        convert_btn.setOnClickListener {
+            val from = from_tv.text
+          
+            getAppropriateConvertFunction()
+        }
+
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DistanceFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DistanceFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun getAppropriateConvertFunction() {
+        val value = firstValue+"2"+secondValue
+
+
+        Toast.makeText(view?.context, value, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun firstValue(choice: String) {
+        firstValue = choice
+    }
+
+    private fun secondValue(choice2: String) {
+        secondValue = choice2
     }
 }
+
+
+
+

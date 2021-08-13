@@ -7,6 +7,17 @@
     android:background="@drawable/main_moon_gradient"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/distanceBtn"
+        android:layout_width="250dp"
+        android:layout_height="75dp"
+        android:text="Distance"
+        android:layout_marginTop="268dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentPlace"
         android:layout_width="match_parent"

@@ -2,4 +2,13 @@
     <string name="app_name">Convertor</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="unit_name">
+        <item>km</item>
+        <item>mi</item>
+        <item>m</item>
+        <item>ft</item>
+        <item>yd</item>
+        <item>cm</item>
+        <item>inch</item>
+    </string-array>
 </resources>
